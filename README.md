@@ -16,11 +16,6 @@ iPhone 7
 
 iPhone 7 Plus
 
-iPhone 8
-
-iPhone 8 Plus
-
-iPhone X
 
 <br/>
 
@@ -45,6 +40,6 @@ iPod Touch 7th Gen (2019)
 
 -----------------------------------------
 
-I will expand support when more devices are supported by checkm8
+I will expand support when more devices are supported by checkm8 + Linus Henze's Signature Check Remover
 
 -----------------------------------------
