@@ -23,7 +23,13 @@ iPad Air 1
 
 iPad Mini 2
 
+<br/>
+
+SUPPORT COMING FOR:
+
+
 iPad Mini 3
+
 
 iPad 6th Gen (2018)
 
@@ -33,7 +39,6 @@ iPad Pro (10.5 Inch)
 
 iPad Pro (12.9 Inch 2nd Gen)
 
-<br/>
 
 iPod Touch 7th Gen (2019)
 
