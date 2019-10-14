@@ -7,6 +7,11 @@ iOS version doesn't matter. If your device is compatible with checkm8 then you c
 
 -----------------------------------------
 
+You need git installed for this to work. There shouldn't be any other dependencies
+
+-----------------------------------------
+
+
 Support includes : 
 <br/>
 <br/>
