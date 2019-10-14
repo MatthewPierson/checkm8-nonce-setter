@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git clone https://github.com/MatthewPierson/ipwndfu_public.git
+
 clear
 
 echo "Please drag and drop the SHSH file that you want to downgrade with into this terminal window then press enter"
