@@ -9,6 +9,7 @@ iOS version doesn't matter. If your device is compatible with checkm8 then you c
 
 Support includes : 
 <br/>
+<br/>
 iPhone 5s
 
 iPhone 7
@@ -40,7 +41,6 @@ iPad Pro (12.9 Inch 2nd Gen)
 <br/>
 
 iPod Touch 7th Gen (2019)
-
 
 
 -----------------------------------------
