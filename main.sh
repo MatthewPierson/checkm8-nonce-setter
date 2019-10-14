@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -rf ipwndfu_public
 
 git clone https://github.com/MatthewPierson/ipwndfu_public.git
 
@@ -52,7 +53,7 @@ echo "Enter device model please"
 
 read device
 
-if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ];
+if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ] || [ $device == "iPhone9,1" ] || [ $device == "iPhone9,2" ] || [ $device == "iPhone9,3" ] || [ $device == "iPhone9,4" ] || [ $device == "iPad4,1" ] || [ $device == "iPad4,2" ] || [ $device == "iPad4,3" ] || [ $device == "iPad4,4" ] || [ $device == "iPad4,5" ] || [ $device == "iPad4,6" ];
 then
 echo "Your $device is supported"
 
@@ -66,16 +67,17 @@ read randomIrrelevant
 
 echo "Starting ipwndfu"
 cd ipwndfu_public
-string=$(./lsusb | grep -c "checkm8")
+string=$(../files/lsusb | grep -c "checkm8")
 until [ $string = 1 ];
 do
+    killall iTunes && killall iTunesHelper
     echo "Waiting 10 seconds to allow you to re-enter DFU mode"
     sleep 10
     echo "Attempting to get into pwndfu mode"
     echo "Please just enter DFU mode again on each reboot"
     echo "The script will run ipwndfu again and again until the device is in PWNDFU mode"
     ./ipwndfu -p
-    string=$(./lsusb | grep -c "checkm8")
+    string=$(../files/lsusb | grep -c "checkm8")
 done
 python rmsigchks.py
 cd ..
@@ -83,21 +85,21 @@ echo "Device is now in PWNDFU mode with signature checks removed (Thanks to Linu
 
 echo "Entering PWNREC mode"
 cd files
-../ipwndfu_public/irecovery -f ibss.$device.img4
-../ipwndfu_public/irecovery -f ibec.$device.img4
+./irecovery -f ibss."$device".img4
+./irecovery -f ibec."$device".img4
 echo "Entered PWNREC mode"
 
 echo "Setting nonce!"
 
 echo "Current nonce"
-../ipwndfu_public/irecovery -q | grep NONC
-../ipwndfu_public/irecovery -c "sentenv com.apple.System.boot-nonce $generator"
-../ipwndfu_public/irecovery -c "saveenv"
-../ipwndfu_public/irecovery -c "setenv auto-boot false"
-../ipwndfu_public/irecovery -c "saveenv"
-../ipwndfu_public/irecovery -c "reset"
+./irecovery -q | grep NONC
+./irecovery -c "sentenv com.apple.System.boot-nonce $generator"
+./irecovery -c "saveenv"
+./irecovery -c "setenv auto-boot false"
+./irecovery -c "saveenv"
+./irecovery -c "reset"
 echo "New nonce"
-../ipwndfu_public/irecovery -q | grep NONC
+./irecovery -q | grep NONC
 
 echo "We are done!"
 echo ""
