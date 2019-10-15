@@ -47,7 +47,16 @@ echo $1 | grep "<string>0x" $shsh  | cut -c10-27
 }
 generator=$(getGenerator $shsh)
 
+if [ -z "$generator" ]
+then
+echo "[ERROR] SHSH does not contain a generator!"
+echo "[ERROR] Please use a different SHSH with a generator!"
+echo "[ERROR] SHSH saved with shsh.host (will show generator) or tsssaver.1conan.com (in noapnonce folder) are acceptable"
+echo "Exiting..."
+exit
+else
 echo "Your generator is: $generator"
+fi
 
 echo "Enter device model please"
 
@@ -71,7 +80,7 @@ string=$(../files/lsusb | grep -c "checkm8")
 until [ $string = 1 ];
 do
     killall iTunes && killall iTunesHelper
-    echo "Waiting 10 seconds to allow you to re-enter DFU mode"
+    echo "Waiting 10 seconds to allow you to enter DFU mode"
     sleep 10
     echo "Attempting to get into pwndfu mode"
     echo "Please just enter DFU mode again on each reboot"
@@ -95,16 +104,17 @@ then
 ./irecovery -f ibec."$device".img4
 fi
 echo "Entered PWNREC mode"
-
-echo "Setting nonce!"
-sleep 2
+sleep 4
 echo "Current nonce"
 ./irecovery -q | grep NONC
+echo "Setting nonce!"
 ./irecovery -c "sentenv com.apple.System.boot-nonce $generator"
 ./irecovery -c "saveenv"
 ./irecovery -c "setenv auto-boot false"
 ./irecovery -c "saveenv"
 ./irecovery -c "reset"
+echo "Waiting for device reset"
+sleep 7
 echo "New nonce"
 ./irecovery -q | grep NONC
 
