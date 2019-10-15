@@ -19,6 +19,11 @@ Keep in mind SEP and Baseband both need to be compatible with the version you ar
 
 -----------------------------------------
 
+Also if you were a tester you should use this latest version as it fixes some issues.
+
+-----------------------------------------
+
+
 Support includes : 
 <br/>
 <br/>
