@@ -7,6 +7,14 @@ iOS version doesn't matter. If your device is compatible with checkm8 then you c
 
 -----------------------------------------
 
+Instructions - 
+
+'"./main.sh"'
+
+Thats it. The script will tell you what to do.
+
+-----------------------------------------
+
 You need git installed for this to work. There shouldn't be any other dependencies
 
 -----------------------------------------
