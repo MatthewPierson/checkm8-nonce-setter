@@ -9,7 +9,7 @@ iOS version doesn't matter. If your device is compatible with checkm8 then you c
 
 Instructions - 
 
-'"./main.sh"'
+`"./main.sh"`
 
 Thats it. The script will tell you what to do.
 
