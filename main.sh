@@ -53,7 +53,7 @@ echo "Enter device model please"
 
 read device
 
-if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ] || [ $device == "iPhone9,1" ] || [ $device == "iPhone9,2" ] || [ $device == "iPhone9,3" ] || [ $device == "iPhone9,4" ] || [ $device == "iPad4,1" ] || [ $device == "iPad4,2" ] || [ $device == "iPad4,3" ] || [ $device == "iPad4,4" ] || [ $device == "iPad4,5" ] || [ $device == "iPad4,6" ] || [ $device == "iPad7,6" ] || [ $device == "iPad7,7" ];
+if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ] || [ $device == "iPhone9,1" ] || [ $device == "iPhone9,2" ] || [ $device == "iPhone9,3" ] || [ $device == "iPhone9,4" ] || [ $device == "iPad4,1" ] || [ $device == "iPad4,2" ] || [ $device == "iPad4,3" ] || [ $device == "iPad4,4" ] || [ $device == "iPad4,5" ] || [ $device == "iPad4,6" ] || [ $device == "iPad7,6" ] || [ $device == "iPad7,5" ];
 then
 echo "Your $device is supported"
 
@@ -79,18 +79,25 @@ do
     ./ipwndfu -p
     string=$(../files/lsusb | grep -c "checkm8")
 done
+
+sleep 3
+
 python rmsigchks.py
 cd ..
 echo "Device is now in PWNDFU mode with signature checks removed (Thanks to Linus Henze)"
 
 echo "Entering PWNREC mode"
 cd files
+
 ./irecovery -f ibss."$device".img4
+if [ $device = iPhone6,1 ] || [ $device = iPhone6,2 ] || [ $device = iPad4,1 ] || [ $device = iPad4,2 ] || [ $device = iPad4,3 ] || [ $device = iPad4,4 ] || [ $device = iPad4,5 ] || [ $device = iPad4,6 ];
+then
 ./irecovery -f ibec."$device".img4
+fi
 echo "Entered PWNREC mode"
 
 echo "Setting nonce!"
-
+sleep 2
 echo "Current nonce"
 ./irecovery -q | grep NONC
 ./irecovery -c "sentenv com.apple.System.boot-nonce $generator"
