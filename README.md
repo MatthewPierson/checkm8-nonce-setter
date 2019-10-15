@@ -3,7 +3,7 @@ A nonce setter for all devices compatible with checkm8
 
 -----------------------------------------
 
-iOS version doesn't matter. If your device is compatible with checkm8 then you can set your nonce and downgrade.
+iOS version doesn't matter. If your device is compatible with checkm8 then you can set your nonce and downgrade. This script is macOS only.
 
 -----------------------------------------
 
@@ -27,7 +27,11 @@ Keep in mind SEP and Baseband both need to be compatible with the version you ar
 
 -----------------------------------------
 
-Also if you were a tester you should use this latest version as it fixes some issues.
+Basically, this is useless unless some iOS 13 SEP + Baseband is compatible with iOS 12, but someone may find some use for it. 
+
+-----------------------------------------
+
+Please don't ask me stupid questions, I'll just ignore you. Please don't use issues to ask stupid questions, just for actual issues thanks.
 
 -----------------------------------------
 
