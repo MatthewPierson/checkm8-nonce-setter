@@ -1,5 +1,5 @@
 # checkm8-nonce-setter
-A nonce setter for all devices compatible with checkm8
+A nonce setter for devices compatible with checkm8
 
 -----------------------------------------
 
