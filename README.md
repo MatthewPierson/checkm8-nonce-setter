@@ -11,6 +11,13 @@ You need git installed for this to work. There shouldn't be any other dependenci
 
 -----------------------------------------
 
+After setting nonce with this, you can futurerestore with the shsh you used during the script. 
+
+-----------------------------------------
+
+Keep in mind SEP and Baseband both need to be compatible with the version you are trying to downgrade to. This script doesn't change that, only allows you to set your nonce without being jailbroken.
+
+-----------------------------------------
 
 Support includes : 
 <br/>
