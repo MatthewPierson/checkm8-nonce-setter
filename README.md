@@ -28,6 +28,8 @@ iPad Air 1
 
 iPad Mini 2
 
+iPad 6th Gen (2018)
+
 <br/>
 
 SUPPORT COMING FOR:
@@ -35,8 +37,6 @@ SUPPORT COMING FOR:
 
 iPad Mini 3
 
-
-iPad 6th Gen (2018)
 
 iPad 7th Gen (2019)
 
