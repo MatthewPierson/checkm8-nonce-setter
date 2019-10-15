@@ -45,7 +45,7 @@ SUPPORT COMING FOR:
 iPad Mini 3
 
 
-iPad 7th Gen (2019)
+iPad 7th Gen (2019) (Need firmware keys)
 
 iPad Pro (10.5 Inch)
 
