@@ -9,7 +9,7 @@ echo "Please drag and drop the SHSH file that you want to downgrade with into th
 
 read shsh
 
-echo "Is $shsh the correct location and file name of your SHSH?"
+echo "Is $shsh the correct location and file name of your SHSH? (y/n)"
 
 read pass
 
@@ -108,12 +108,12 @@ sleep 4
 echo "Current nonce"
 ./irecovery -q | grep NONC
 echo "Setting nonce!"
-./irecovery -c "sentenv com.apple.System.boot-nonce $generator"
+./irecovery -c "setenv com.apple.System.boot-nonce $generator"
 ./irecovery -c "saveenv"
 ./irecovery -c "setenv auto-boot false"
 ./irecovery -c "saveenv"
 ./irecovery -c "reset"
-echo "Waiting for device reset"
+echo "Waiting for device to restart into recovery mode"
 sleep 7
 echo "New nonce"
 ./irecovery -q | grep NONC
