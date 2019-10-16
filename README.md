@@ -3,7 +3,7 @@ A nonce setter for devices compatible with checkm8
 
 -----------------------------------------
 
-iOS version doesn't matter. If your device is compatible with checkm8 then you can set your nonce and downgrade. This script is macOS only.
+iOS version doesn't matter. If your device is compatible with checkm8 + Linus Henze's Signature Check Remover then you can set your nonce and downgrade. This script is macOS only.
 
 -----------------------------------------
 
