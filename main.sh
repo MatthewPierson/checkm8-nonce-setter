@@ -5,58 +5,79 @@ git clone https://github.com/MatthewPierson/ipwndfu_public.git
 
 clear
 
-echo "Please drag and drop the SHSH file that you want to downgrade with into this terminal window then press enter"
+echo "Do you want to input a generator? (y,n)"
 
-read shsh
+read input
 
-echo "Is $shsh the correct location and file name of your SHSH? (y/n)"
-
-read pass
-
-if [ $pass == yes ] || [ $pass == Yes ] || [ $pass == y ] || [ $pass == Y ];
+if [ $input = y ];
 then
-echo "Continuing with given SHSH"
+    echo "Please enter your desiered generator."
 
-elif [ $pass == no ] || [ $pass == No ] || [ $pass == n ] || [ $pass == n ];
+    read generator
+
+    echo "Your generator is $generator"
+elif [ $input = n ];
 then
-echo "Please restart script and give the correct location and file name"
-echo "Exiting..."
-exit
+
+    echo "Please drag and drop the SHSH file that you want to downgrade with into this terminal window then press enter"
+
+    read shsh
+
+    echo "Is $shsh the correct location and file name of your SHSH? (y/n)"
+
+    read pass
+
+        if [ $pass == yes ] || [ $pass == Yes ] || [ $pass == y ] || [ $pass == Y ];
+        then
+            echo "Continuing with given SHSH"
+
+        elif [ $pass == no ] || [ $pass == No ] || [ $pass == n ] || [ $pass == n ];
+        then
+            echo "Please restart script and give the correct location and file name"
+            echo "Exiting..."
+            exit
+
+        else
+            echo "Unrecognised input"
+            echo "Exiting..."
+            exit
+
+        fi
+
+        if [ ${shsh: -6} == ".shsh2" ] || [ ${shsh: -5} == ".shsh" ];
+        then
+            echo "File verified as SHSH2 file, continuing"
+
+        else
+            echo "Please ensure that the file extension is either .shsh or .shsh2 and retry"
+            echo "Exiting..."
+            exit
+        fi
+
+        echo "Getting generator from SHSH"
+
+        getGenerator() {
+        echo $1 | grep "<string>0x" $shsh  | cut -c10-27
+        }
+        generator=$(getGenerator $shsh)
+
+        if [ -z "$generator" ]
+        then
+            echo "[ERROR] SHSH does not contain a generator!"
+            echo "[ERROR] Please use a different SHSH with a generator!"
+            echo "[ERROR] SHSH saved with shsh.host (will show generator) or tsssaver.1conan.com (in noapnonce folder) are acceptable"
+            echo "Exiting..."
+            exit
+        else
+            echo "Your generator is: $generator"
+        fi
 
 else
-echo "Unrecognised input"
-echo "Exiting..."
-exit
-
+    echo "Input not recognized, Exiting..."
+    exit
 fi
 
-if [ ${shsh: -6} == ".shsh2" ] || [ ${shsh: -5} == ".shsh" ];
-then
-echo "File verified as SHSH2 file, continuing"
-
-else
-echo "Please ensure that the file extension is either .shsh or .shsh2 and retry"
-echo "Exiting..."
-exit
-fi
-
-echo "Getting generator from SHSH"
-
-getGenerator() {
-echo $1 | grep "<string>0x" $shsh  | cut -c10-27
-}
-generator=$(getGenerator $shsh)
-
-if [ -z "$generator" ]
-then
-echo "[ERROR] SHSH does not contain a generator!"
-echo "[ERROR] Please use a different SHSH with a generator!"
-echo "[ERROR] SHSH saved with shsh.host (will show generator) or tsssaver.1conan.com (in noapnonce folder) are acceptable"
-echo "Exiting..."
-exit
-else
-echo "Your generator is: $generator"
-fi
+echo "$generator"
 
 echo "Enter device model please"
 
@@ -64,10 +85,12 @@ read device
 
 if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ] || [ $device == "iPhone9,1" ] || [ $device == "iPhone9,2" ] || [ $device == "iPhone9,3" ] || [ $device == "iPhone9,4" ] || [ $device == "iPad4,1" ] || [ $device == "iPad4,2" ] || [ $device == "iPad4,3" ] || [ $device == "iPad4,4" ] || [ $device == "iPad4,5" ] || [ $device == "iPad4,6" ] || [ $device == "iPad7,6" ] || [ $device == "iPad7,5" ];
 then
-echo "Your $device is supported"
+    echo "Your $device is supported"
 
 else
-echo "No support sorry"
+    echo "Your $device is not supported, sorry."
+    echo "Exiting..."
+    exit
 fi
 
 echo "Please connect device in DFU mode. Press enter when ready to continue"
@@ -99,10 +122,12 @@ echo "Entering PWNREC mode"
 cd files
 
 ./irecovery -f ibss."$device".img4
+
 if [ $device = iPhone6,1 ] || [ $device = iPhone6,2 ] || [ $device = iPad4,1 ] || [ $device = iPad4,2 ] || [ $device = iPad4,3 ] || [ $device = iPad4,4 ] || [ $device = iPad4,5 ] || [ $device = iPad4,6 ];
 then
-./irecovery -f ibec."$device".img4
+    ./irecovery -f ibec."$device".img4
 fi
+
 echo "Entered PWNREC mode"
 sleep 4
 echo "Current nonce"
@@ -121,3 +146,4 @@ echo "New nonce"
 echo "We are done!"
 echo ""
 echo "You can now futurerestore to the firmware that this SHSH is vaild for"
+echo "Assuming that signed SEP and Baseband are compatible"
