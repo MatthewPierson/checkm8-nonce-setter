@@ -56,6 +56,7 @@ iPad 6th Gen (2018)
 
 iPad Mini 3
 
+iPad 7th Gen (2019) (Thanks to @RazMashat on twitter for keys =) )
 
 <br/>
 
@@ -65,13 +66,9 @@ iPod Touch 7th Gen (2019)
 SUPPORT COMING FOR:
 
 
-iPad 7th Gen (2019) (Need firmware keys)
-
 iPad Pro (10.5 Inch)
 
 iPad Pro (12.9 Inch 2nd Gen)
-
-
 
 
 

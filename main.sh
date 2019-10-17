@@ -83,7 +83,7 @@ echo "Enter device model please"
 
 read device
 
-if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ] || [ $device == "iPhone9,1" ] || [ $device == "iPhone9,2" ] || [ $device == "iPhone9,3" ] || [ $device == "iPhone9,4" ] || [ $device == "iPad4,1" ] || [ $device == "iPad4,2" ] || [ $device == "iPad4,3" ] || [ $device == "iPad4,4" ] || [ $device == "iPad4,5" ] || [ $device == "iPad4,6" ] || [ $device == "iPad7,6" ] || [ $device == "iPad7,5" ] || [ $device == "iPad4,7" ] || [ $device == "iPad4,8" ] || [ $device == "iPad4,9" ] || [ $device == "iPod9,1" ];
+if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ] || [ $device == "iPhone9,1" ] || [ $device == "iPhone9,2" ] || [ $device == "iPhone9,3" ] || [ $device == "iPhone9,4" ] || [ $device == "iPad4,1" ] || [ $device == "iPad4,2" ] || [ $device == "iPad4,3" ] || [ $device == "iPad4,4" ] || [ $device == "iPad4,5" ] || [ $device == "iPad4,6" ] || [ $device == "iPad7,6" ] || [ $device == "iPad7,5" ] || [ $device == "iPad4,7" ] || [ $device == "iPad4,8" ] || [ $device == "iPad4,9" ] || [ $device == "iPad7,11" ] || [ $device == "iPod9,1" ];
 then
     echo "Your $device is supported"
 
