@@ -66,9 +66,9 @@ iPod Touch 7th Gen (2019)
 SUPPORT COMING FOR:
 
 
-iPad Pro (10.5 Inch)
+iPad Pro (10.5 Inch) (Need firmware keys)
 
-iPad Pro (12.9 Inch 2nd Gen)
+iPad Pro (12.9 Inch 2nd Gen) (Need firmware keys)
 
 
 
