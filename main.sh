@@ -1,9 +1,12 @@
 #!/bin/bash
-rm -rf ipwndfu_public
-
-git clone https://github.com/MatthewPierson/ipwndfu_public.git
-
-clear
+cd ipwndfu_public; if [ $? = 0 ];
+then
+    git pull
+    cd ..
+else
+    rm -rf ipwndfu_public
+    git clone https://github.com/MatthewPierson/ipwndfu_public.git
+fi
 
 echo "Do you want to input a generator? (y,n)"
 
