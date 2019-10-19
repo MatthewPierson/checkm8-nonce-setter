@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ipwndfu_public; if [ $? = 0 ];
+cd ipwndfu_public &>/dev/null; if [ $? = 0 ];
 then
     git pull
     cd ..
