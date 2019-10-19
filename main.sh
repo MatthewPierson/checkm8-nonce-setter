@@ -1,31 +1,41 @@
 #!/bin/bash
-rm -rf ipwndfu_public
-
-git clone https://github.com/MatthewPierson/ipwndfu_public.git
-
-clear
-
-echo "Do you want to input a generator? (y,n)"
-
-read input
-
-if [ $input = y ];
+cd ipwndfu_public &>/dev/null; if [ $? = 0 ];
 then
-    echo "Please enter your desiered generator."
+    git pull
+    cd ..
+else
+    rm -rf ipwndfu_public
+    git clone https://github.com/MatthewPierson/ipwndfu_public.git
+fi
 
-    read generator
+exit_flag=0
 
-    echo "Your generator is $generator"
-elif [ $input = n ];
-then
+# Generator setup
+while [ $exit_flag -ne 1 ]
+do
+    echo "Do you want to input a generator? (y,n)"
 
-    echo "Please drag and drop the SHSH file that you want to downgrade with into this terminal window then press enter"
+    read input
 
-    read shsh
+    if [ $input = y ];
+    then
+        echo "Please enter your desired generator."
 
-    echo "Is $shsh the correct location and file name of your SHSH? (y/n)"
+        read generator
 
-    read pass
+        echo "Your generator is $generator"
+        echo ""
+        break
+    elif [ $input = n ];
+    then
+
+        echo "Please drag and drop the SHSH file that you want to downgrade with into this terminal window then press enter"
+
+        read shsh
+
+        echo "Is $shsh the correct location and file name of your SHSH? (y/n)"
+
+        read pass
 
         if [ $pass == yes ] || [ $pass == Yes ] || [ $pass == y ] || [ $pass == Y ];
         then
@@ -34,13 +44,11 @@ then
         elif [ $pass == no ] || [ $pass == No ] || [ $pass == n ] || [ $pass == n ];
         then
             echo "Please restart script and give the correct location and file name"
-            echo "Exiting..."
-            exit
+            break
 
         else
             echo "Unrecognised input"
-            echo "Exiting..."
-            exit
+            break
 
         fi
 
@@ -50,14 +58,13 @@ then
 
         else
             echo "Please ensure that the file extension is either .shsh or .shsh2 and retry"
-            echo "Exiting..."
-            exit
+            break
         fi
 
         echo "Getting generator from SHSH"
 
         getGenerator() {
-        echo $1 | grep "<string>0x" $shsh  | cut -c10-27
+            echo $1 | grep "<string>0x" $shsh  | cut -c10-27
         }
         generator=$(getGenerator $shsh)
 
@@ -67,38 +74,99 @@ then
             echo "[ERROR] Please use a different SHSH with a generator!"
             echo "[ERROR] SHSH saved with shsh.host (will show generator) or tsssaver.1conan.com (in noapnonce folder) are acceptable"
             echo "Exiting..."
-            exit
+            break
         else
             echo "Your generator is: $generator"
         fi
+    elif [ $input = 'exit' ]
+    then
+        exit_flag=1
+    fi
+done
 
-else
-    echo "Input not recognized, Exiting..."
+echo "Set device into DFU mode, then press enter..."
+read
+echo "Connecting to device"
+
+# Model retrieving
+cd files
+./irecovery -v > output.txt 2>&1
+output=`cat output.txt | tail -1`
+
+case $output in
+*"ERROR"*)
+    echo "Unable to connect to device"
     exit
-fi
-
-echo "$generator"
-
-echo "Enter device model please"
-
-read device
-
-if [ $device == "iPhone6,1" ] || [ $device == "iPhone6,2" ] || [ $device == "iPhone9,1" ] || [ $device == "iPhone9,2" ] || [ $device == "iPhone9,3" ] || [ $device == "iPhone9,4" ] || [ $device == "iPad4,1" ] || [ $device == "iPad4,2" ] || [ $device == "iPad4,3" ] || [ $device == "iPad4,4" ] || [ $device == "iPad4,5" ] || [ $device == "iPad4,6" ] || [ $device == "iPad7,6" ] || [ $device == "iPad7,5" ] || [ $device == "iPad4,7" ] || [ $device == "iPad4,8" ] || [ $device == "iPad4,9" ] || [ $device == "iPad7,11" ] || [ $device == "iPod9,1" ];
-then
-    echo "Your $device is supported"
-
-else
-    echo "Your $device is not supported, sorry."
+    ;;
+*"iPhone6,1"*)
+    model="iPhone6,1"
+    ;;
+*"iPhone6,2"*)
+    model="iPhone6,2"
+    ;;
+*"iPhone9,1"*)
+    model="iPhone9,1"
+    ;;
+*"iPhone9,2"*)
+    model="iPhone9,2"
+    ;;
+*"iPhone9,3"*)
+    model="iPhone9,3"
+    ;;
+*"iPhone9,4"*)
+    model="iPhone9,4"
+    ;;
+*"iPad4,1"*)
+    model="iPad4,1"
+    ;;
+*"iPad4,2"*)
+    model="iPad4,2"
+    ;;
+*"iPad4,3"*)
+    model="iPad4,3"
+    ;;
+*"iPad4,4"*)
+    model="iPad4,4"
+    ;;
+*"iPad4,5"*)
+    model="iPad4,5"
+    ;;
+*"iPad4,6"*)
+    model="iPad4,6"
+    ;;
+*"iPad4,7"*)
+    model="iPad4,7"
+    ;;
+*"iPad4,8"*)
+    model="iPad4,8"
+    ;;
+*"iPad4,9"*)
+    model="iPad4,9"
+    ;;
+*"iPad7,5"*)
+    model="iPad7,5"
+    ;;
+*"iPad7,6"*)
+    model="iPad7,6"
+    ;;
+*"iPad7,11"*)
+    model="iPad7,11"
+    ;;
+*"iPod9,1"*)
+    model="iPod9,1"
+    ;;
+*)
+    echo "Your device is currently not supported, or not supported at all by checkm8."
     echo "Exiting..."
     exit
-fi
+    ;;
+esac
 
-echo "Please connect device in DFU mode. Press enter when ready to continue"
+echo "Your $model is supported"
 
-read randomIrrelevant
-
+# ipwndfu start
 echo "Starting ipwndfu"
-cd ipwndfu_public
+cd ../ipwndfu_public
 string=$(../files/lsusb | grep -c "checkm8")
 until [ $string = 1 ];
 do
@@ -114,6 +182,7 @@ done
 
 sleep 3
 
+# Bypassing signature checks
 python rmsigchks.py
 cd ..
 echo "Device is now in PWNDFU mode with signature checks removed (Thanks to Linus Henze)"
@@ -121,13 +190,15 @@ echo "Device is now in PWNDFU mode with signature checks removed (Thanks to Linu
 echo "Entering PWNREC mode"
 cd files
 
-./irecovery -f ibss."$device".img4
+# Sending image to device
+./irecovery -f ibss."$model".img4
 
-if [ $device = iPhone6,1 ] || [ $device = iPhone6,2 ] || [ $device = iPad4,1 ] || [ $device = iPad4,2 ] || [ $device = iPad4,3 ] || [ $device = iPad4,4 ] || [ $device = iPad4,5 ] || [ $device = iPad4,6 ] || [ $device = iPad4,7 ] || [ $device = iPad4,8 ] || [ $device = iPad4,9 ];
+if [ $model = iPhone6,1 ] || [ $model = iPhone6,2 ] || [ $model = iPad4,1 ] || [ $model = iPad4,2 ] || [ $model = iPad4,3 ] || [ $model = iPad4,4 ] || [ $model = iPad4,5 ] || [ $model = iPad4,6 ] || [ $model = iPad4,7 ] || [ $model = iPad4,8 ] || [ $model = iPad4,9 ];
 then
-    ./irecovery -f ibec."$device".img4
+    ./irecovery -f ibec."$model".img4
 fi
 
+# Setting nonce
 echo "Entered PWNREC mode"
 sleep 4
 echo "Current nonce"
@@ -145,5 +216,5 @@ echo "New nonce"
 
 echo "We are done!"
 echo ""
-echo "You can now futurerestore to the firmware that this SHSH is vaild for"
+echo "You can now futurerestore to the firmware that this SHSH is valid for"
 echo "Assuming that signed SEP and Baseband are compatible"
