@@ -1,4 +1,14 @@
 #!/bin/bash
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
 rm -rf ipwndfu_public
 
 git clone https://github.com/MatthewPierson/ipwndfu_public.git
@@ -99,17 +109,37 @@ read randomIrrelevant
 
 echo "Starting ipwndfu"
 cd ipwndfu_public
-string=$(../files/lsusb | grep -c "checkm8")
+
+if [ ${machine} == "Mac" ]; then
+    string=$(../files/lsusb | grep -c "checkm8")
+elif [ ${machine} == "Linux" ]; then
+    string=$(/usr/bin/lsusb | grep -c "checkm8")
+else
+    echo "OS not supported"
+    echo "Exiting..."
+    exit
+fi
+
 until [ $string = 1 ];
 do
-    killall iTunes && killall iTunesHelper
+    if [ ${machine} == "Mac" ]; then
+        killall iTunes && killall iTunesHelper
+    fi
     echo "Waiting 10 seconds to allow you to enter DFU mode"
     sleep 10
     echo "Attempting to get into pwndfu mode"
     echo "Please just enter DFU mode again on each reboot"
     echo "The script will run ipwndfu again and again until the device is in PWNDFU mode"
     ./ipwndfu -p
-    string=$(../files/lsusb | grep -c "checkm8")
+    if [ ${machine} == "Mac" ]; then
+        string=$(../files/lsusb | grep -c "checkm8")
+    elif [ ${machine} == "Linux" ]; then
+        string=$(/usr/bin/lsusb | grep -c "checkm8")
+    else
+        echo "OS not supported"
+        echo "Exiting..."
+        exit
+    fi
 done
 
 sleep 3
@@ -121,27 +151,42 @@ echo "Device is now in PWNDFU mode with signature checks removed (Thanks to Linu
 echo "Entering PWNREC mode"
 cd files
 
-./irecovery -f ibss."$device".img4
+if [ ${machine} == "Mac" ]; then
+    irecovery="./irecovery"
+elif [ ${machine} == "Linux" ]; then
+    if ! hash irecovery 2>/dev/null; then
+        echo "I require irecovery but it's not installed"
+        echo  "Exiting..."
+        exit
+    fi
+    irecovery="irecovery"
+else
+    echo "OS not supported"
+    echo "Exiting..."
+    exit
+fi
+
+$irecovery -f ibss."$device".img4
 
 if [ $device = iPhone6,1 ] || [ $device = iPhone6,2 ] || [ $device = iPad4,1 ] || [ $device = iPad4,2 ] || [ $device = iPad4,3 ] || [ $device = iPad4,4 ] || [ $device = iPad4,5 ] || [ $device = iPad4,6 ] || [ $device = iPad4,7 ] || [ $device = iPad4,8 ] || [ $device = iPad4,9 ];
 then
-    ./irecovery -f ibec."$device".img4
+    $irecovery -f ibec."$device".img4
 fi
 
 echo "Entered PWNREC mode"
 sleep 4
 echo "Current nonce"
-./irecovery -q | grep NONC
+$irecovery -q | grep NONC
 echo "Setting nonce!"
-./irecovery -c "setenv com.apple.System.boot-nonce $generator"
-./irecovery -c "saveenv"
-./irecovery -c "setenv auto-boot false"
-./irecovery -c "saveenv"
-./irecovery -c "reset"
+$irecovery -c "setenv com.apple.System.boot-nonce $generator"
+$irecovery -c "saveenv"
+$irecovery -c "setenv auto-boot false"
+$irecovery -c "saveenv"
+$irecovery -c "reset"
 echo "Waiting for device to restart into recovery mode"
 sleep 7
 echo "New nonce"
-./irecovery -q | grep NONC
+$irecovery -q | grep NONC
 
 echo "We are done!"
 echo ""
