@@ -45,6 +45,8 @@ iPhone 7
 
 iPhone 7 Plus
 
+iPhone X
+
 
 <br/>
 
