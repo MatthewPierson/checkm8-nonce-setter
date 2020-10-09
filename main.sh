@@ -172,7 +172,7 @@ read randomIrrelevant
 
 if [ $device == iPhone10,3 ] || [ $device == iPhone10,6 ]; then
     git clone https://github.com/MatthewPierson/ipwndfuA11
-    cd ipwndfu
+    cd ipwndfuA11
 else
     git clone https://github.com/MatthewPierson/ipwndfu_public.git
     cd ipwndfu_public
