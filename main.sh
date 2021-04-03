@@ -200,7 +200,7 @@ if [ $device == iPhone10,3 ] || [ $device == iPhone10,6 ]; then
     sleep 1
 else
     echo "Device is NOT an iPhone X, using Linus's signature check remover"
-    python rmsigchks.py
+    python2 rmsigchks.py
     sleep 1
 fi
 cd ..
