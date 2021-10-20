@@ -48,7 +48,7 @@ iPhone 6s Plus
 
 -----------------------------------------
 
-#Credits 
+# Credits 
 
 [libimobiledevice](https://github.com/libimobiledevice) for [irecovery](https://github.com/libimobiledevice/libirecovery)
 
