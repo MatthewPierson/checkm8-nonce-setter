@@ -15,19 +15,11 @@ Thats it. The script will tell you what to do.
 
 -----------------------------------------
 
-You need git installed for this to work. There shouldn't be any other dependencies
-
------------------------------------------
-
 After setting nonce with this, you can futurerestore with the shsh you used during the script. 
 
 -----------------------------------------
 
 Keep in mind SEP and Baseband both need to be compatible with the version you are trying to downgrade to. This script doesn't change that, only allows you to set your nonce without being jailbroken.
-
------------------------------------------
-
-Basically, this is useless unless some iOS 13 SEP + Baseband is compatible with iOS 12, but someone may find some use for it. 
 
 -----------------------------------------
 
