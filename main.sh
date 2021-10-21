@@ -104,6 +104,18 @@ if [ $? == 0 ]; then
    device="n71map"
    echo $device
 fi
+files/igetnonce | grep 'n66ap' &> /dev/null
+if [ $? == 0 ]; then
+   echo "Supported Device"
+   device="n71map"
+   echo $device
+fi
+files/igetnonce | grep 'n66map' &> /dev/null
+if [ $? == 0 ]; then
+   echo "Supported Device"
+   device="n71map"
+   echo $device
+fi
 
 
 if [ -z "$device" ]
@@ -123,7 +135,7 @@ echo "Starting eclipsa"
 
 cd files
 
-if [ $device == n69ap ] || [ $device == n71map ]; then
+if [ $device == n69ap ] || [ $device == n71map ] || [ $device == n66map ]; then
     echo "Device has a tsmc chip, using eclipsa8003"
     ./eclipsa8003
     sleep 1
@@ -153,6 +165,8 @@ echo "We should be in pwned recovery mode now"
 echo "Current nonce"
 ./irecovery -q | grep NONC
 echo "Setting nonce to $generator"
+./irecovery -c "bgcolor 255 0 0"
+sleep 1
 ./irecovery -c "setenv com.apple.System.boot-nonce $generator"
 sleep 1
 ./irecovery -c "saveenv"
