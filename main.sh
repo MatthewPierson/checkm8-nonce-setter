@@ -107,13 +107,13 @@ fi
 files/igetnonce | grep 'n66ap' &> /dev/null
 if [ $? == 0 ]; then
    echo "Supported Device"
-   device="n71map"
+   device="n66ap"
    echo $device
 fi
 files/igetnonce | grep 'n66map' &> /dev/null
 if [ $? == 0 ]; then
    echo "Supported Device"
-   device="n71map"
+   device="n66map"
    echo $device
 fi
 
