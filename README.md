@@ -45,4 +45,4 @@ iPhone 6s Plus
 
 [libimobiledevice](https://github.com/libimobiledevice) for [irecovery](https://github.com/libimobiledevice/libirecovery)
 
-[0x7ff](https://github.com/0x7ff) for [eclipsa](https://github.com/0x7ff/eclipsa)
+[dora2ios](https://twitter.com/dora2ios) for [ipwnder-lite](https://github.com/dora2-iOS/ipwnder_lite)
