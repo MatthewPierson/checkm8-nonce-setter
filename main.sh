@@ -131,20 +131,11 @@ echo "Please connect device in DFU mode. Press enter when ready to continue"
 
 read randomIrrelevant
 
-echo "Starting eclipsa"
+echo "Starting ipwnder-lite"
 
 cd files
 
-if [ $device == n69ap ] || [ $device == n71map ] || [ $device == n66map ]; then
-    echo "Device has a tsmc chip, using eclipsa8003"
-    ./eclipsa8003
-    sleep 1
-else
-    echo "Device has a samsung chip, using eclipsa8000"
-    ./eclipsa8000
-    sleep 1
-fi
-echo "Device is now in pwned DFU mode with signature checks removed (Thanks to 0x7ff)"
+./ipwnder_macosx -p
 
 sleep 2
 
