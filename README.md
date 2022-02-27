@@ -9,6 +9,7 @@ iOS version doesn't matter. If your device is compatible with checkm8 + Linus He
 
 Instructions - 
 
+Run `xattr -dr com.apple.quarantine [a9-checkm8-nonce-setter-folder]/files` to resolve unsigned binary errors.   
 `"./main.sh"`
 
 Thats it. The script will tell you what to do.
