@@ -9,13 +9,10 @@ iOS version doesn't matter. If your device is compatible with checkm8 + Linus He
 
 Instructions - 
 
+Run `xattr -dr com.apple.quarantine [a9-checkm8-nonce-setter-folder]/files` to resolve unsigned binary errors.   
 `"./main.sh"`
 
 Thats it. The script will tell you what to do.
-
------------------------------------------
-
-You need git installed for this to work. There shouldn't be any other dependencies
 
 -----------------------------------------
 
@@ -27,10 +24,6 @@ Keep in mind SEP and Baseband both need to be compatible with the version you ar
 
 -----------------------------------------
 
-Basically, this is useless unless some iOS 13 SEP + Baseband is compatible with iOS 12, but someone may find some use for it. 
-
------------------------------------------
-
 Please don't ask me stupid questions, I'll just ignore you. Please don't use issues to ask stupid questions, just for actual issues thanks.
 
 -----------------------------------------
@@ -39,43 +32,17 @@ Please don't ask me stupid questions, I'll just ignore you. Please don't use iss
 Support includes : 
 <br/>
 <br/>
-iPhone 5s
+iPhone SE (2016)
 
-iPhone 7
+iPhone 6s 
 
-iPhone 7 Plus
-
-iPhone X
-
-
-<br/>
-
-iPad Air 1
-
-iPad Mini 2
-
-iPad 6th Gen (2018)
-
-iPad Mini 3
-
-iPad 7th Gen (2019) (Thanks to @RazMashat on twitter for keys =) )
-
-<br/>
-
-iPod Touch 7th Gen (2019)
-
-
-SUPPORT COMING FOR:
-
-
-iPad Pro (10.5 Inch) (Need firmware keys)
-
-iPad Pro (12.9 Inch 2nd Gen) (Need firmware keys)
-
+iPhone 6s Plus
 
 
 -----------------------------------------
 
-I will expand support when more devices are supported by checkm8 + Linus Henze's Signature Check Remover
+# Credits 
 
------------------------------------------
+[libimobiledevice](https://github.com/libimobiledevice) for [irecovery](https://github.com/libimobiledevice/libirecovery)
+
+[dora2ios](https://twitter.com/dora2ios) for [ipwnder-lite](https://github.com/dora2-iOS/ipwnder_lite)

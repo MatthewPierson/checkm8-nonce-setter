@@ -1,6 +1,4 @@
 #!/bin/bash
-rm -rf ipwndfu_public
-rm -rf ipwndfu
 
 clear
 echo "*** Matty's Checkm8 APNonce Setter ***"
@@ -10,7 +8,7 @@ read input
 
 if [ $input = y ];
 then
-    echo "Please enter your desiered generator."
+    echo "Please enter your desired generator."
 
     read generator
 
@@ -77,85 +75,48 @@ else
 fi
 
 echo "$generator"
+echo "getting device model"
 
-
-files/igetnonce | grep 'n53ap' &> /dev/null
+files/igetnonce | grep 'n69ap' &> /dev/null
 if [ $? == 0 ]; then
    echo "Supported Device"
-   device="iPhone6,2"
-   echo $device
-fi
-
-files/igetnonce | grep 'n51ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPhone6,1"
+   device="n69ap"
    echo $device
 fi
 
-files/igetnonce | grep 'j71ap' &> /dev/null
+files/igetnonce | grep 'n69uap' &> /dev/null
 if [ $? == 0 ]; then
    echo "Supported Device"
-   device="iPad4,1"
+   device="n69uap"
    echo $device
 fi
 
-files/igetnonce | grep 'j72ap' &> /dev/null
+files/igetnonce | grep 'n71ap' &> /dev/null
 if [ $? == 0 ]; then
    echo "Supported Device"
-   device="iPad4,2"
+   device="n71ap"
    echo $device
 fi
 
-files/igetnonce | grep 'j85ap' &> /dev/null
+files/igetnonce | grep 'n71map' &> /dev/null
 if [ $? == 0 ]; then
    echo "Supported Device"
-   device="iPad4,4"
+   device="n71map"
+   echo $device
+fi
+files/igetnonce | grep 'n66ap' &> /dev/null
+if [ $? == 0 ]; then
+   echo "Supported Device"
+   device="n66ap"
+   echo $device
+fi
+files/igetnonce | grep 'n66map' &> /dev/null
+if [ $? == 0 ]; then
+   echo "Supported Device"
+   device="n66map"
    echo $device
 fi
 
-files/igetnonce | grep 'j86ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPad4,5"
-   echo $device
-fi
-files/igetnonce | grep 'd11ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPhone9,2"
-   echo $device
-fi
-files/igetnonce | grep 'd10ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPhone9,1"
-   echo $device
-fi
-files/igetnonce | grep 'd101ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPhone9,3"
-   echo $device
-fi
-files/igetnonce | grep 'd111ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPhone9,4"
-   echo $device
-fi
-files/igetnonce | grep 'd22ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPhone10,3"
-   echo $device
-fi
-files/igetnonce | grep 'd221ap' &> /dev/null
-if [ $? == 0 ]; then
-   echo "Supported Device"
-   device="iPhone10,6"
-   echo $device
-fi
 
 if [ -z "$device" ]
 then
@@ -170,61 +131,33 @@ echo "Please connect device in DFU mode. Press enter when ready to continue"
 
 read randomIrrelevant
 
-if [ $device == iPhone10,3 ] || [ $device == iPhone10,6 ]; then
-    git clone https://github.com/MatthewPierson/ipwndfuA11
-    cd ipwndfuA11
-else
-    git clone https://github.com/MatthewPierson/ipwndfu_public.git
-    cd ipwndfu_public
-fi
-echo "Starting ipwndfu"
+echo "Starting ipwnder-lite"
 
-string=$(../files/lsusb | grep -c "checkm8")
-until [ $string = 1 ];
-do
-    killall iTunes && killall iTunesHelper
-    echo "Waiting 10 seconds to allow you to enter DFU mode"
-    sleep 10
-    echo "Attempting to get into pwndfu mode"
-    echo "Please just enter DFU mode again on each reboot"
-    echo "The script will run ipwndfu again and again until the device is in PWNDFU mode"
-    ./ipwndfu -p
-    string=$(../files/lsusb | grep -c "checkm8")
-done
-
-sleep 3
-
-if [ $device == iPhone10,3 ] || [ $device == iPhone10,6 ]; then
-    echo "Device is an iPhone X, using akayn's signature check remover"
-    ./ipwndfu --patch
-    sleep 1
-else
-    echo "Device is NOT an iPhone X, using Linus's signature check remover"
-    python2 rmsigchks.py
-    sleep 1
-fi
-cd ..
-echo "Device is now in PWNDFU mode with signature checks removed (Thanks to Linus Henze & akayn)"
-
-echo "Entering PWNREC mode"
 cd files
 
-if [ $device == iPhone10,3 ] || [ $device == iPhone10,6 ]; then
-    ./irecovery -f junk.txt
-fi
+./ipwnder_macosx -p
 
-./irecovery -f ibss."$device".img4
+sleep 2
 
-if [ $device = iPhone6,1 ] || [ $device = iPhone6,2 ] || [ $device = iPad4,1 ] || [ $device = iPad4,2 ] || [ $device = iPad4,3 ] || [ $device = iPad4,4 ] || [ $device = iPad4,5 ] || [ $device = iPad4,6 ] || [ $device = iPad4,7 ] || [ $device = iPad4,8 ] || [ $device = iPad4,9 ];
-then
-    ./irecovery -f ibec."$device".img4
-fi
+echo "Uploading bootchain"
 
-echo "Entered PWNREC mode"
-sleep 4
+iBSS="iBSS.$device.img4"
+iBEC="iBEC.$device.img4"
+echo "Uploading $iBSS"
+./irecovery -f $iBSS
+sleep 2
+echo "Uploading $iBEC"
+./irecovery -f $iBEC
+sleep 2
+
+echo "We should be in pwned recovery mode now"
+
+
 echo "Current nonce"
 ./irecovery -q | grep NONC
 echo "Setting nonce to $generator"
+./irecovery -c "bgcolor 255 0 0"
+sleep 1
 ./irecovery -c "setenv com.apple.System.boot-nonce $generator"
 sleep 1
 ./irecovery -c "saveenv"
